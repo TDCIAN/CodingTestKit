@@ -111,31 +111,112 @@ let completion3: [String] = ["stanko", "ana", "mislav"]
  return list(answer.keys())[0]
  */
 
-func solution(participant: [String], completion: [String]) -> String {
-    var answer: String = ""
-    var temp: Int = 0
-    var dic: [Int: String] = [:]
-    for i in 0..<participant.count {
-        dic[participant[i].hashValue] = participant[i]
-        temp += participant[i].hashValue
-        print("--- 위 시작 ---")
-        print("위 (1) dic: \(dic) \n (2) temp: \(temp)")
-        print("--- 위 끝 ---")
-    }
-    for i in 0..<completion.count {
-        temp -= completion[i].hashValue
-        print("--- 아래 시작 ---")
-        print("아래 temp: \(temp)")
-        print("--- 아래 끝 ---")
-    }
-    answer = dic[temp] ?? ""
-    print("앤즈워: \(answer)")
-    return answer
-}
+// 위 풀이를 Swift로 변환
+//func solution(participant: [String], completion: [String]) -> String {
+//    var answer: String = ""
+//    var temp: Int = 0
+//    var dic: [Int: String] = [:]
+//    for i in 0..<participant.count {
+//        dic[participant[i].hashValue] = participant[i]
+//        temp += participant[i].hashValue
+//        print("--- 위 시작 ---")
+//        print("위 (1) dic: \(dic) \n (2) temp: \(temp)")
+//        print("--- 위 끝 ---")
+//    }
+//    for i in 0..<completion.count {
+//        temp -= completion[i].hashValue
+//        print("--- 아래 시작 ---")
+//        print("아래 temp: \(temp)")
+//        print("--- 아래 끝 ---")
+//    }
+//    answer = dic[temp] ?? ""
+//    print("앤즈워: \(answer)")
+//    return answer
+//}
+//
+//DispatchQueue.main.async {
+//    print("첫번째: \(solution(participant: participant1, completion: completion1))")
+//    print("두번째: \(solution(participant: participant2, completion: completion2))")
+//    print("세번째: \(solution(participant: participant3, completion: completion3))")
+//}
 
-DispatchQueue.main.async {
-    print("첫번째: \(solution(participant: participant1, completion: completion1))")
-    print("두번째: \(solution(participant: participant2, completion: completion2))")
-    print("세번째: \(solution(participant: participant3, completion: completion3))")
-}
 
+// MARK: 해시 - 2 / 전화번호 목록(https://programmers.co.kr/learn/courses/30/lessons/42577)
+/*
+ 1) 문제 설명
+ 전화번호부에 적힌 전화번호 중, 한 번호가 다른 번호의 접두어인 경우가 있는지 확인하려 합니다.
+ 전화번호가 다음과 같을 경우, 구조대 전화번호는 영석이의 전화번호의 접두사입니다.
+ - 구조대: 119
+ - 박준영: 97 674 223
+ - 지영석: 11 9552 4421
+ 전화번호부에 적힌 전화번호를 담은 배열 phone_book이 solution 함수의 매개변수로 주어질 때,
+ 어떤 번호가 다른 번호의 접두어인 경우가 있으면 false를
+ 그렇지 않으면 true를 return 하도록 solution 함수를 작성해 주세요.
+ 
+ 2) 제한사항
+ - phone_book의 길이는 1 이상 1,000,000 이하입니다.
+    - 각 전화번호의 길이는 1 이상 20 이하입니다.
+    - 같은 전화번호가 중복해서 들어있지 않습니다.
+ 
+ 3) 입출력 예
+ phone_book
+ ["119", "97674223", "1195524421"] -> return false
+ ["123", "456", "789"] -> return true
+ ["12", "123", "1235", "567", "88"] -> return false
+
+ 
+ 4) 입출력 예 설명
+ 예제 #1
+ - 앞에서 설명한 예와 같습니다.
+ 예제 #2
+ - 한 번호가 다른 번호의 접두사인 경우가 없으므로, 답은 true입니다.
+ 예제 #3
+ - 첫 번째 전화번호, "12"가 두 번째 전화번호 "123"의 접두사입니다. 따라서 답은 false입니다.
+ */
+
+// Python 3 풀이 -> https://coding-grandpa.tistory.com/86
+/*
+ def solution(phone_book):
+    # 1. Hash map을 만든다
+    hash_map = {}
+    for phone_number in phone_book:
+        hash_map[phone_number] = 1
+ 
+    # 2. 접두어가 Hash map에 존재하는지 찾는다
+    for phone_number in phone_book:
+        prefix = ""
+        for number in phone_number:
+            prefix += number
+            # 3. 접두어를 찾아야 한다(기존 번호와 같은 경우 제외)
+            if prefix in hash_map and prefix != phone_number:
+                return False
+    return True
+ */
+
+// Swift 풀이로 전환
+//func solution(phoneBook: [String]) -> Bool {
+//    var hashMap: [String: Int] = [:]
+//    // 1.Hash map을 만든다
+//    for phoneNumber in phoneBook {
+//        hashMap[phoneNumber] = 1
+//    }
+//
+//    // 2. 접두어가 Hash map에 존재하는지 찾는다
+//    for phoneNumber in phoneBook {
+//        var prefix: String = ""
+//        for number in phoneNumber {
+//            prefix += String(number)
+//            // 3. 접두어를 찾아야 한다(기존 번호와 같은 경우 제외)
+//            if hashMap.keys.contains(prefix) && prefix != phoneNumber {
+//                return false
+//            }
+//        }
+//    }
+//    return true
+//}
+//let case1: [String] = ["119", "97674223", "1195524421"]
+//let case2: [String] = ["123", "456", "789"]
+//let case3: [String] = ["12", "123", "1235", "567", "88"]
+//print("첫 번째: \(solution(phoneBook: case1))")
+//print("두 번째: \(solution(phoneBook: case2))")
+//print("세 번째: \(solution(phoneBook: case3))")
