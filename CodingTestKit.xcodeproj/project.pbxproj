@@ -24,7 +24,7 @@
 		1E8BF58F27ED3EE400CC52F6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1E8BF59227ED3EE400CC52F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1E8BF59427ED3EE400CC52F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1E8BF59A27ED3EFC00CC52F6 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		1E8BF59A27ED3EFC00CC52F6 /* Hash.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Hash.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,7 +64,7 @@
 				1E8BF58F27ED3EE400CC52F6 /* Assets.xcassets */,
 				1E8BF59127ED3EE400CC52F6 /* LaunchScreen.storyboard */,
 				1E8BF59427ED3EE400CC52F6 /* Info.plist */,
-				1E8BF59A27ED3EFC00CC52F6 /* MyPlayground.playground */,
+				1E8BF59A27ED3EFC00CC52F6 /* Hash.playground */,
 			);
 			path = CodingTestKit;
 			sourceTree = "<group>";

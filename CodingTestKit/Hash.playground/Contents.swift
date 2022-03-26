@@ -93,14 +93,14 @@ let completion3: [String] = ["stanko", "ana", "mislav"]
  좋아요 239개
  def solution(participant, completion):
      answer = ''
-     temp = 0
-     dic = {}
-     for part in participant:
-         dic[hash(part)] = part
-         temp += int(hash(part))
-     for com in completion:
-         temp -= hash(com)
-     answer = dic[temp]
+     total_hash_value = 0
+     dictionary = {}
+     for player in participant:
+         dic[hash(player)] = player
+         total_hash_value += hash(part)
+     for comp in completion:
+         total_hash_value -= hash(comp)
+     answer = dictionary[total_hash_value]
      return answer
  
  좋아요 606개
@@ -289,27 +289,131 @@ let completion3: [String] = ["stanko", "ana", "mislav"]
 //let case1 = [["yellowhat", "headgear"], ["bluesunglasses", "eyewear"], ["green_turban", "headgear"]]
 //let case2 = [["crowmask", "face"], ["bluesunglasses", "face"], ["smoky_makeup", "face"]]
 //
-//// Swift 풀이
+//// Swift 풀이 -> 내가 푼 거
 //func solution(clothes: [[String]]) -> Int {
-//
-//    var clothesType: [String: Int] = [:]
+//    var clothesDictionary: [String: Int] = [:]
 //    for cloth in clothes {
-//        let type = cloth[1]
-//        if !clothesType.keys.contains(type) {
-//            clothesType[type] = 2
+//        let key = cloth[1]
+//        if clothesDictionary.keys.contains(key) {
+//            clothesDictionary[key]! += 1
 //        } else {
-//            clothesType[type]! += 1
+//            clothesDictionary = 2
+//             -> 2를 넣는 이유: 해당 종류의 의상이 없을 때 그 의상을 더해주면서 아무것도 안입었을 경우까지 고려하여 2를 넣는 것임
 //        }
 //    }
-//
-//    var answer: Int = 1
-//    for number in clothesType.values {
+//    var answer = 1
+//    for number in clothesDictionary.values {
 //        answer *= number
 //    }
-//
 //    return answer - 1
 //}
 //
+
+// Swift 풀이 -> 프로그래머스 다른 사람들이 푼 거
+//func solution(clothes: [[String]]) -> Int {
+//    let types = clothes.compactMap({ $0.last })
+//    let typeSet = Set(types)
+//    let categories = Array(typeSet)
+//    print("타입스: \(types), 타입셋: \(typeSet), 카테고리즈: \(categories)")
+//
+//    let counts = categories.map({ category in
+//        return clothes.filter({ $0.last == category }).count + 1
+//    })
+//    print("카운츠: \(counts)")
+//    return counts.reduce(1, { $0 * $1} ) - 1
+//}
 //print("1번 케이스: \(solution(clothes: case1))")
 //print("2번 케이스: \(solution(clothes: case2))")
 
+// MARK: 해시 - 4 / 베스트앨범(https://programmers.co.kr/learn/courses/30/lessons/42579)
+/*
+ 1) 문제 설명
+ 스트리밍 사이트에서 장르 별로 가장 많이 재생된 노래를 두 개씩 모아 베스트 앨범을 출시하려 합니다.
+ 노래는 고유 번호로 구분하며, 노래를 수록하는 기준은 다음과 같습니다.
+ 1. 속한 노래가 많이 재생된 장르를 먼저 수록합니다.
+ 2. 장르 내에서 많이 재생된 노래를 먼저 수록합니다.
+ 3. 장르 내에서 재생 횟수가 같은 노래 중에서는 고유 번호가 낮은 노래를 먼저 수록합니다.
+ 노래의 장르를 나타내는 문자열 배열 genres와 노래별 재생 횟수를 나타내는 정수 배열 plays가 주어질 때,
+ 베스트 앨범에 들어갈 노래의 고유 번호를 순서대로 return 하도록 solution 함수를 완성하세요.
+  
+ 2) 제한사항
+ - genres[i]는 고유번호가 i인 노래의 장르입니다.
+ - plays[i]는 고유번호가 i인 노래가 재생된 횟수입니다.
+ - genres와 plays의 길이는 같으며, 이는 1 이상 10,000 이하입니다.
+ - 장르 종류는 100개 미만입니다.
+ - 장르에 속한 곡이 하나라면, 하나의 곡만 선택합니다.
+ - 모든 장르는 재생된 횟수가 다릅니다.
+ 
+ 3) 입출력 예
+ - genres: ["classic", "pop", "classic", "classic", "pop"]
+ - plays: [500, 600, 150, 800, 2500]
+ - return: [4, 1, 3, 0]
+ 
+ 4) 입출력 예 설명
+ classic 장르는 1,450회 재생되었으며, classic 노래는 다음과 같습니다.
+ - 고유 번호 3: 800회 재생
+ - 고유 번호 0: 500회 재생
+ - 고유 번호 2: 150회 재생
+ 
+ pop 장르는 3,100회 재생되었으며, pop 노래는 다음과 같습니다.
+ - 고유 번호 4: 2,500회 재생
+ - 고유 번호 1: 600회 재생
+ 
+ 따라서 pop 장르의 [4,1]번 노래를 먼저, classic 장르의 [3,0]번 노래를 그 다음에 수록합니다.
+ */
+
+
+/*
+ Python3 -> 참고: https://javaiyagi.tistory.com/635?category=620712
+ def solution(genres, plays):
+    answer = []
+    dic = {}
+    dic2 = {}
+    for i, (genre, play) in enumerate(zip(genres, plays)):
+        if genre in dic:
+            dic[genre].append((i, play))
+        else:
+            dic[genre] = [(i, play)]
+ 
+        if genre in dic2:
+            dic2[genre] += play
+        else:
+            dic2[genre] = play
+ 
+    for (k, _) in sorted(dic2.items(), key=lambda x: x[1], reverse = True):
+        for (i, play) in sorted(dic[k], key=lambda x: (x[1], -x[0]), reverse = True)[:2]:answer.append(i)
+ 
+    return answer
+ */
+
+// Swift -> 프로그래머스 참고
+func solution(_ genres: [String], _ plays: [Int]) -> [Int] {
+    var playList: [String: (play: Int, music: [Int:Int])] = [:]
+    var answer: [Int] = []
+    
+    for (index, value) in genres.enumerated() {
+        if let genre = playList[value]?.play {
+            playList[value]?.play = genre + plays[index]
+            playList[value]?.music[index] = plays[index]
+        } else {
+            playList[value] = (play: plays[index], music: [index: plays[index]])
+        }
+    }
+    
+    let rank = playList.sorted(by: { $0.value.play > $1.value.play })
+    
+    rank.forEach { song in
+        let songRank = song.value.music
+            .sorted {$0.key < $1.key}
+            .sorted { $0.value > $1.value }
+        let max = songRank.count > 1 ? 2: 1
+        for i in 0..<max {
+            answer.append(songRank[i].key)
+        }
+    }
+    return answer
+}
+
+let genres: [String] = ["classic", "pop", "classic", "classic", "pop"]
+let plays: [Int] = [500, 600, 150, 800, 2500]
+print("솔루션: \(solution(genres, plays))")
