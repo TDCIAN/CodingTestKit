@@ -111,34 +111,34 @@ let completion3: [String] = ["stanko", "ana", "mislav"]
  return list(answer.keys())[0]
  */
 
-// 위 풀이를 Swift로 변환
-func solution(participant: [String], completion: [String]) -> String {
-    var answer: String = ""
-    var temp: Int = 0
-    var dic: [Int: String] = [:]
-    for i in 0..<participant.count {
-        dic[participant[i].hashValue] = participant[i]
-        temp += participant[i].hashValue
-        print("--- 위 시작 ---")
-        print("위 (1) dic: \(dic) \n (2) temp: \(temp)")
-        print("--- 위 끝 ---")
-    }
-    for i in 0..<completion.count {
-        temp -= completion[i].hashValue
-        print("--- 아래 시작 ---")
-        print("아래 temp: \(temp)")
-        print("--- 아래 끝 ---")
-    }
-    answer = dic[temp] ?? ""
-    print("앤즈워: \(answer)")
-    return answer
-}
-
-DispatchQueue.main.async {
-    print("첫번째: \(solution(participant: participant1, completion: completion1))")
-    print("두번째: \(solution(participant: participant2, completion: completion2))")
-    print("세번째: \(solution(participant: participant3, completion: completion3))")
-}
+//// 위 풀이를 Swift로 변환
+//func solution(participant: [String], completion: [String]) -> String {
+//    var answer: String = ""
+//    var temp: Int = 0
+//    var dic: [Int: String] = [:]
+//    for i in 0..<participant.count {
+//        dic[participant[i].hashValue] = participant[i]
+//        temp += participant[i].hashValue
+//        print("--- 위 시작 ---")
+//        print("위 (1) dic: \(dic) \n (2) temp: \(temp)")
+//        print("--- 위 끝 ---")
+//    }
+//    for i in 0..<completion.count {
+//        temp -= completion[i].hashValue
+//        print("--- 아래 시작 ---")
+//        print("아래 temp: \(temp)")
+//        print("--- 아래 끝 ---")
+//    }
+//    answer = dic[temp] ?? ""
+//    print("앤즈워: \(answer)")
+//    return answer
+//}
+//
+//DispatchQueue.main.async {
+//    print("첫번째: \(solution(participant: participant1, completion: completion1))")
+//    print("두번째: \(solution(participant: participant2, completion: completion2))")
+//    print("세번째: \(solution(participant: participant3, completion: completion3))")
+//}
 
 
 // MARK: 해시 - 2 / 전화번호 목록(https://programmers.co.kr/learn/courses/30/lessons/42577)
