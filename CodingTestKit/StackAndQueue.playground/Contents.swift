@@ -98,8 +98,8 @@ import UIKit
 // Swift -> 곰튀김님 답
 //func solution(_ progresses: [Int], _ speeds: [Int]) -> [Int] {
 //    return zip(progresses, speeds)
-//        .map {
-//            (100 - $0 + ($1 - 1)) / $1
+//        .map { progress, speed in
+//            (100 - progress + (speed - 1)) / speed
 //        }
 //        .reduce(([], 0)) { (tuple, day) -> ([Int], Int) in
 //            let (list, lastMax) = tuple
